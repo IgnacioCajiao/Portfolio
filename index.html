@@ -57,6 +57,20 @@
       transform: scale(1);
     }
 
+    /* True 16:9 full-bleed cover scaling for YouTube background embeds at any aspect ratio */
+    .hero-bg-iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      border: 0;
+    }
+
     /* Lightened readability veil so background gallery art stays bright and visible */
     .hero-veil {
       background: rgba(9, 11, 16, 0.50);
@@ -142,44 +156,44 @@
       <!-- Slide 0: Waning Light Extended Gameplay Video (starts at 1:08) -->
       <div class="hero-bg-slide active" data-slide="0">
         <iframe
-          src="https://www.youtube.com/embed/KPvr7AhB2kk?autoplay=1&mute=1&loop=1&playlist=KPvr7AhB2kk&controls=0&rel=0&modestbranding=1&playsinline=1&start=68"
+          src="https://www.youtube.com/embed/KPvr7AhB2kk?autoplay=1&mute=1&loop=1&playlist=KPvr7AhB2kk&controls=0&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0&iv_load_policy=3&start=68"
           title="Waning Light Gameplay Background"
           referrerpolicy="strict-origin-when-cross-origin"
           allow="autoplay; encrypted-media"
-          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+          class="hero-bg-iframe"
         ></iframe>
       </div>
 
       <!-- Slide 1: Galactic Clean-Up Gameplay & Gyro Controller Video (starts at 1:31) -->
       <div class="hero-bg-slide" data-slide="1">
         <iframe
-          src="https://www.youtube.com/embed/O9p9akqp9SU?autoplay=1&mute=1&loop=1&playlist=O9p9akqp9SU&controls=0&rel=0&modestbranding=1&playsinline=1&start=91"
+          src="https://www.youtube.com/embed/O9p9akqp9SU?autoplay=1&mute=1&loop=1&playlist=O9p9akqp9SU&controls=0&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0&iv_load_policy=3&start=91"
           title="Galactic Clean-Up Gameplay Background"
           referrerpolicy="strict-origin-when-cross-origin"
           allow="autoplay; encrypted-media"
-          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+          class="hero-bg-iframe"
         ></iframe>
       </div>
 
       <!-- Slide 2: Bounty Hunt (Far Cry Arcade) Video -->
       <div class="hero-bg-slide" data-slide="2">
         <iframe
-          src="https://www.youtube.com/embed/vbFNlQmJRS0?autoplay=1&mute=1&loop=1&playlist=vbFNlQmJRS0&controls=0&rel=0&modestbranding=1&playsinline=1&start=12"
+          src="https://www.youtube.com/embed/vbFNlQmJRS0?autoplay=1&mute=1&loop=1&playlist=vbFNlQmJRS0&controls=0&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0&iv_load_policy=3&start=12"
           title="Bounty Hunt Far Cry Arcade Background"
           referrerpolicy="strict-origin-when-cross-origin"
           allow="autoplay; encrypted-media"
-          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+          class="hero-bg-iframe"
         ></iframe>
       </div>
 
       <!-- Slide 3: Surprising New Friend (Unity Cinematic) Video -->
       <div class="hero-bg-slide" data-slide="3">
         <iframe
-          src="https://www.youtube.com/embed/iBNAPqIIVZE?autoplay=1&mute=1&loop=1&playlist=iBNAPqIIVZE&controls=0&rel=0&modestbranding=1&playsinline=1&start=6"
+          src="https://www.youtube.com/embed/iBNAPqIIVZE?autoplay=1&mute=1&loop=1&playlist=iBNAPqIIVZE&controls=0&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0&iv_load_policy=3&start=6"
           title="Surprising New Friend Unity Cinematic Background"
           referrerpolicy="strict-origin-when-cross-origin"
           allow="autoplay; encrypted-media"
-          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+          class="hero-bg-iframe"
         ></iframe>
       </div>
     </div>
