@@ -140,7 +140,7 @@
 
       <nav class="flex items-center gap-7 sm:gap-10 text-sm sm:text-base font-medium text-gray-300">
         <a href="#work" class="hover:text-amber-300 transition-colors">Work</a>
-        <a href="#disciplines" class="hover:text-amber-300 transition-colors">Skills</a>
+        <a href="#skills" class="hover:text-amber-300 transition-colors">Skills</a>
         <a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a>
       </nav>
     </div>
@@ -322,7 +322,7 @@
 
           <div class="p-7 sm:p-8 flex-1 flex flex-col justify-between">
             <div>
-              <div class="font-mono text-xs sm:text-sm text-gray-400">Unity • Blender • ESP32 Gyro</div>
+              <div class="font-mono text-xs sm:text-sm text-gray-400">Unity • 3D Printing • ESP32 Gyro</div>
               <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-2 group-hover:text-cyan-300 transition-colors">Galactic Clean-Up</h3>
               <p class="text-base sm:text-lg text-gray-300 mt-3 leading-relaxed">
                 In game UX integration paired with a custom 3D printed wireless gyro garbage truck controller.
@@ -445,9 +445,9 @@
   </section>
 
   <!-- ===================================================================== -->
-  <!-- 4. CORE DISCIPLINES SECTION                                           -->
+  <!-- 4. CORE SKILLS SECTION                                                -->
   <!-- ===================================================================== -->
-  <section id="disciplines" class="py-20 border-t border-white/[0.07] bg-surface/50">
+  <section id="skills" class="py-20 border-t border-white/[0.07] bg-surface/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-8">
       <div class="rounded-2xl bg-card border border-white/10 p-7 sm:p-10 space-y-6">
         <div>
@@ -520,21 +520,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-8 mt-10 pt-6 border-t border-white/[0.06]">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-gray-500">
         <span>© 2026 Ignacio Cajiao Hernandez • Level Design • Game Design • UX</span>
-        <button onclick="toggleAssetsDrawer()" id="assetsDrawerBtn" class="text-gray-400 hover:text-amber-300 underline underline-offset-4 transition-colors">
-          Local Assets Folder Guide ↓
-        </button>
-      </div>
-
-      <!-- Collapsible Local Assets Folder Guide -->
-      <div id="assetsDrawer" class="hidden mt-5 rounded-2xl bg-[#11151F] border border-white/10 p-5 font-mono text-xs text-gray-300 space-y-2.5">
-        <div class="text-amber-300 font-semibold uppercase tracking-wider text-[11px]">
-          GitHub Pages Folder Structure (Lightweight Images &amp; GIFs Only — Videos Stream via YouTube)
-        </div>
-        <div><span class="text-amber-300">assets/WaningLight/:</span> <code>Start screen.png</code>, <code>DayLivingroomV2.png</code>, <code>SchoolTaskImageText.png</code>, <code>Screen Recording 2026-04-01 022937.gif</code>, <code>Screen Recording 2026-04-01 022453.gif</code></div>
-        <div><span class="text-cyan-300">assets/Galactic Clean-Up/:</span> <code>20260416_003113.jpg</code>, <code>image000000(4).jpg</code>, <code>JoeTheTrashMan.png</code>, <code>GalacticCleanUpAngled.png</code></div>
-        <div><span class="text-amber-300">assets/Gravity Break/:</span> <code>Gravity Break FSM.png</code></div>
-        <div><span class="text-cyan-300">assets/FarCry level/:</span> Optional cover image <code>bounty-hunt-cover.jpg</code> (falls back automatically to YouTube thumbnail)</div>
-        <div><span class="text-amber-300">assets/Unity Cinematic/:</span> Optional cover image <code>surprising-new-friend-cover.jpg</code> (falls back automatically to YouTube thumbnail)</div>
       </div>
     </div>
   </footer>
@@ -603,14 +588,6 @@
       document.getElementById('inspectBgToggle').textContent = inspectBgActive
         ? 'Restore Intro Text'
         : 'Inspect Background Art';
-    }
-
-    function toggleAssetsDrawer() {
-      const drawer = document.getElementById('assetsDrawer');
-      const btn = document.getElementById('assetsDrawerBtn');
-      const isHidden = drawer.classList.contains('hidden');
-      drawer.classList.toggle('hidden', !isHidden);
-      btn.textContent = isHidden ? 'Hide Local Assets Folder Guide ↑' : 'Local Assets Folder Guide ↓';
     }
 
     startHeroAutoCycle();
@@ -969,11 +946,11 @@
           <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono text-cyan-400">
             <span>GAME JAM TEAM + SOLO HARDWARE SPRINT</span>
             <span>•</span>
-            <span>UNITY • BLENDER • ESP32 GYRO</span>
+            <span>UNITY • 3D PRINTING • ESP32 GYRO</span>
           </div>
           <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mt-2">Galactic Clean Up: In Game UX &amp; Wireless Gyro Controller</h2>
           <p class="text-base sm:text-lg text-gray-300 mt-3 max-w-4xl leading-relaxed">
-            Started as a 48 hour game jam build where I integrated UI, audio, and 3D assets in Unity, then expanded solo into an Experience Design project featuring a custom 3D printed wireless garbage truck controller.
+            Started as a 4 day game jam build (Monday–Thursday development with a Friday showcase) where I integrated UI, audio, and 3D assets in Unity, then expanded solo into an Experience Design project featuring a custom 3D printed wireless garbage truck controller.
           </p>
         </div>
 
@@ -1028,7 +1005,7 @@
           <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10 space-y-2.5">
             <div class="font-mono text-sm text-amber-400 font-bold">PHASE 2: DIEGETIC HARDWARE ERGONOMICS</div>
             <p class="text-gray-300 leading-relaxed">
-              Modeled a custom multi part housing in Blender around an ESP32 and 6 axis accelerometer, adding tilt deadzones, a thumb boost trigger, and a USB C charging port after playtest feedback.
+              Modeled a custom multi part 3D printed housing around an ESP32 and 6 axis accelerometer, adding tilt deadzones, a thumb boost trigger, and a USB C charging port after playtest feedback.
             </p>
           </div>
         </div>
