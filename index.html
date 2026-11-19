@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Ignacio Cajiao Hernandez | Level Design, Game Design &amp; UX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: '#090B10',
+            surface: '#11151F',
+            card: '#131824',
+            amberCandle: '#F59E0B',
+            cyanSignal: '#38BDF8',
+          },
+          boxShadow: {
+            'glow-amber': '0 0 36px -8px rgba(245, 158, 11, 0.28)',
+            'glow-cyan': '0 0 36px -8px rgba(56, 189, 248, 0.24)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090B10;
+      color: #F3F4F6;
+      overflow-x: hidden;
+    }
+
+    /* Crossfading background gallery slides */
+    .hero-bg-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 1.1s ease-in-out, transform 8s ease-out;
+      pointer-events: none;
+    }
+    .hero-bg-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Lightened readability veil so background gallery art stays bright and visible */
+    .hero-veil {
+      background: rgba(9, 11, 16, 0.50);
+      transition: opacity 0.45s ease;
+    }
+    .hero-veil.inspect-bg {
+      opacity: 0;
+    }
+
+    .hero-foreground {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .hero-foreground.inspect-bg {
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    /* Subtle tactical grid for selected work section */
+    .bg-grid-subtle {
+      background-size: 44px 44px;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    }
+
+    /* Project card hover motion */
+    .project-card {
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090B10;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F2738;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- ===================================================================== -->
+  <!-- 1. MINIMAL STICKY TOP NAVIGATION                                      -->
+  <!-- ===================================================================== -->
+  <header class="fixed top-0 inset-x-0 z-40 border-b border-white/[0.07] bg-[#090B10]/85 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center font-mono font-semibold text-sm text-amber-300 group-hover:border-amber-400 transition-colors">
+          ICH
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-base sm:text-lg tracking-tight text-white leading-none">IGNACIO C.H.</span>
+          <span class="font-mono text-xs tracking-wider text-gray-400 mt-1">Level Design • Game Design • UX</span>
+        </div>
+      </a>
+
+      <nav class="flex items-center gap-7 sm:gap-10 text-sm sm:text-base font-medium text-gray-300">
+        <a href="#work" class="hover:text-amber-300 transition-colors">Work</a>
+        <a href="#disciplines" class="hover:text-amber-300 transition-colors">Skills</a>
+        <a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- 2. FULL-VIEWPORT ATMOSPHERIC BACKGROUND GALLERY HERO                  -->
+  <!-- ===================================================================== -->
+  <section id="hero" class="relative min-h-screen flex flex-col justify-between pt-28 pb-8 overflow-hidden border-b border-white/[0.07]">
+    
+    <!-- Crossfading Background Gallery Layer (YouTube Streams) -->
+    <div id="heroGalleryLayer" class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <!-- Slide 0: Waning Light Extended Gameplay Video (starts at 1:08) -->
+      <div class="hero-bg-slide active" data-slide="0">
+        <iframe
+          src="https://www.youtube.com/embed/KPvr7AhB2kk?autoplay=1&mute=1&loop=1&playlist=KPvr7AhB2kk&controls=0&rel=0&modestbranding=1&playsinline=1&start=68"
+          title="Waning Light Gameplay Background"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media"
+          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+        ></iframe>
+      </div>
+
+      <!-- Slide 1: Galactic Clean-Up Gameplay & Gyro Controller Video (starts at 1:31) -->
+      <div class="hero-bg-slide" data-slide="1">
+        <iframe
+          src="https://www.youtube.com/embed/O9p9akqp9SU?autoplay=1&mute=1&loop=1&playlist=O9p9akqp9SU&controls=0&rel=0&modestbranding=1&playsinline=1&start=91"
+          title="Galactic Clean-Up Gameplay Background"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media"
+          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+        ></iframe>
+      </div>
+
+      <!-- Slide 2: Bounty Hunt (Far Cry Arcade) Video -->
+      <div class="hero-bg-slide" data-slide="2">
+        <iframe
+          src="https://www.youtube.com/embed/vbFNlQmJRS0?autoplay=1&mute=1&loop=1&playlist=vbFNlQmJRS0&controls=0&rel=0&modestbranding=1&playsinline=1&start=12"
+          title="Bounty Hunt Far Cry Arcade Background"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media"
+          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+        ></iframe>
+      </div>
+
+      <!-- Slide 3: Surprising New Friend (Unity Cinematic) Video -->
+      <div class="hero-bg-slide" data-slide="3">
+        <iframe
+          src="https://www.youtube.com/embed/iBNAPqIIVZE?autoplay=1&mute=1&loop=1&playlist=iBNAPqIIVZE&controls=0&rel=0&modestbranding=1&playsinline=1&start=6"
+          title="Surprising New Friend Unity Cinematic Background"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; encrypted-media"
+          class="w-[177.78vh] min-w-full h-[56.25vw] min-h-full pointer-events-none border-0"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Readability Veil -->
+    <div id="heroVeil" class="hero-veil absolute inset-0 z-10 pointer-events-none"></div>
+
+    <!-- Main Hero Intro (Minimalist & Uncluttered) -->
+    <div id="heroForeground" class="hero-foreground relative z-20 max-w-7xl mx-auto px-4 sm:px-8 w-full my-auto py-10">
+      <div class="max-w-2xl rounded-2xl bg-[#090B10]/75 backdrop-blur-md border border-white/10 p-7 sm:p-10 shadow-2xl">
+        <p class="font-mono text-xs sm:text-sm tracking-widest uppercase text-amber-400 mb-3">
+          IGNACIO C.H. • Level Design • Game Design • UX
+        </p>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+          Ignacio Cajiao Hernandez
+        </h1>
+
+        <div class="mt-6 space-y-4 text-base sm:text-lg text-gray-200 leading-relaxed font-normal">
+          <p>
+            Hi, my name is Ignacio. I'm a game designer with hands on experience across multiple areas of development, including 3D modeling, coding, systems design, UI/UX, cinematography and level design. Exploring different parts of the process has helped me understand how each discipline shapes the player experience.
+          </p>
+          <p>
+            I’m currently focusing on level design, game design, and UX, areas where I enjoy shaping player flow, readability, and moment to moment interaction. I like breaking down how players think, how they navigate spaces, and how design choices guide their decisions and experience. I’m working toward roles that blend creativity, player psychology, and clear communication.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a
+            href="#work"
+            class="inline-flex items-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold bg-amber-500 hover:bg-amber-400 text-gray-950 transition-all shadow-glow-amber"
+          >
+            Explore Selected Work
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discreet Bottom Gallery Controls -->
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/[0.08]">
+      <div class="flex items-center gap-2.5">
+        <span class="font-mono text-[11px] uppercase tracking-wider text-gray-500">Gallery:</span>
+        <div id="heroDots" class="flex items-center gap-1.5">
+          <button onclick="setHeroSlide(0)" aria-label="Show Waning Light" class="hero-dot w-6 h-1.5 rounded-full bg-amber-400 transition-all"></button>
+          <button onclick="setHeroSlide(1)" aria-label="Show Galactic Clean-Up" class="hero-dot w-2 h-1.5 rounded-full bg-white/25 hover:bg-white/50 transition-all"></button>
+          <button onclick="setHeroSlide(2)" aria-label="Show Bounty Hunt" class="hero-dot w-2 h-1.5 rounded-full bg-white/25 hover:bg-white/50 transition-all"></button>
+          <button onclick="setHeroSlide(3)" aria-label="Show Surprising New Friend" class="hero-dot w-2 h-1.5 rounded-full bg-white/25 hover:bg-white/50 transition-all"></button>
+        </div>
+        <span id="heroSlideCaption" class="font-mono text-[11px] text-gray-400 ml-1.5">01 / Waning Light • Gameplay Loop</span>
+      </div>
+
+      <button
+        id="inspectBgToggle"
+        onclick="toggleInspectBg()"
+        class="font-mono text-[11px] text-gray-400 hover:text-amber-300 transition-colors"
+      >
+        Inspect Background Art
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 3. SELECTED WORK (5 CURATED PROJECT CARDS)                            -->
+  <!-- ===================================================================== -->
+  <section id="work" class="py-24 bg-grid-subtle border-b border-white/[0.07]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="mb-12">
+        <span class="font-mono text-xs sm:text-sm uppercase tracking-widest text-amber-400">Portfolio</span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-2">Selected Work</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Card 1: Waning Light -->
+        <article
+          onclick="openCaseStudy('waning-light')"
+          class="project-card group cursor-pointer rounded-2xl bg-card border border-white/10 hover:border-amber-400/50 hover:shadow-glow-amber overflow-hidden flex flex-col"
+        >
+          <div class="relative h-64 sm:h-72 bg-[#160D24] overflow-hidden">
+            <img
+              src="Assets/WaningLight/Start screen.png"
+              alt="Waning Light title screen"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.style.display='none'"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#131824] via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#090B10]/85 text-amber-300 border border-amber-400/30">
+              CAPSTONE TEAM
+            </span>
+          </div>
+
+          <div class="p-7 sm:p-8 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-xs sm:text-sm text-gray-400">Treebear Interactive • Unity</div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-2 group-hover:text-amber-300 transition-colors">Waning Light</h3>
+              <p class="text-base sm:text-lg text-gray-300 mt-3 leading-relaxed">
+                Systems design, combat AI logic, and mood based economy for a narrative card battler and life sim.
+              </p>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between text-sm font-mono text-amber-300">
+              <span>View Case Study &amp; Videos</span>
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Galactic Clean-Up -->
+        <article
+          onclick="openCaseStudy('galactic-cleanup')"
+          class="project-card group cursor-pointer rounded-2xl bg-card border border-white/10 hover:border-cyan-400/50 hover:shadow-glow-cyan overflow-hidden flex flex-col"
+        >
+          <div class="relative h-64 sm:h-72 bg-[#0E1B29] overflow-hidden">
+            <img
+              src="Assets/Galactic Clean-Up/20260416_003113.jpg"
+              alt="Galactic Clean-Up custom 3D printed gyro controller"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.style.display='none'"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#131824] via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#090B10]/85 text-cyan-300 border border-cyan-400/30">
+              JAM + SOLO HARDWARE
+            </span>
+          </div>
+
+          <div class="p-7 sm:p-8 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-xs sm:text-sm text-gray-400">Unity • Blender • ESP32 Gyro</div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-2 group-hover:text-cyan-300 transition-colors">Galactic Clean-Up</h3>
+              <p class="text-base sm:text-lg text-gray-300 mt-3 leading-relaxed">
+                In game UX integration paired with a custom 3D printed wireless gyro garbage truck controller.
+              </p>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between text-sm font-mono text-cyan-300">
+              <span>View Case Study &amp; Video</span>
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Gravity Break -->
+        <article
+          onclick="openCaseStudy('gravity-break')"
+          class="project-card group cursor-pointer rounded-2xl bg-card border border-white/10 hover:border-amber-400/50 hover:shadow-glow-amber overflow-hidden flex flex-col"
+        >
+          <div class="relative h-64 sm:h-72 bg-[#121D33] overflow-hidden">
+            <img
+              src="Assets/Gravity Break/Gravity Break FSM.png"
+              alt="Gravity Break FSM and gameplay sheet"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.style.display='none'"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#131824] via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#090B10]/85 text-amber-300 border border-amber-400/30">
+              GAME DESIGN CONCEPT
+            </span>
+          </div>
+
+          <div class="p-7 sm:p-8 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-xs sm:text-sm text-gray-400">2D Platformer • Systems &amp; Flow</div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-2 group-hover:text-amber-300 transition-colors">Gravity Break</h3>
+              <p class="text-base sm:text-lg text-gray-300 mt-3 leading-relaxed">
+                Gravity inversion platforming built around readable state indicators, oxygen pacing, and enemy counterplay.
+              </p>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between text-sm font-mono text-amber-300">
+              <span>Inspect Mechanics &amp; Flow</span>
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Bounty Hunt (Far Cry Arcade) -->
+        <article
+          onclick="openCaseStudy('bounty-hunt')"
+          class="project-card group cursor-pointer rounded-2xl bg-card border border-white/10 hover:border-cyan-400/50 hover:shadow-glow-cyan overflow-hidden flex flex-col"
+        >
+          <div class="relative h-64 sm:h-72 bg-[#181018] overflow-hidden">
+            <img
+              src="Assets/FarCry level/bounty-hunt-cover.jpg"
+              alt="Bounty Hunt Far Cry Arcade level"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.onerror=null; this.src='https://img.youtube.com/vi/vbFNlQmJRS0/hqdefault.jpg';"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#131824] via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#090B10]/85 text-cyan-300 border border-cyan-400/30">
+              SOLO LEVEL DESIGN
+            </span>
+          </div>
+
+          <div class="p-7 sm:p-8 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-xs sm:text-sm text-gray-400">Far Cry Arcade Editor • 3D FPS</div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-2 group-hover:text-cyan-300 transition-colors">Bounty Hunt</h3>
+              <p class="text-base sm:text-lg text-gray-300 mt-3 leading-relaxed">
+                Multi floor bunker infiltration and extraction level guided by flare lighting and escalating combat pacing.
+              </p>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between text-sm font-mono text-cyan-300">
+              <span>Watch Playthrough &amp; LDD</span>
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5: Surprising New Friend (Unity Cinematic) -->
+        <article
+          onclick="openCaseStudy('surprising-new-friend')"
+          class="project-card group cursor-pointer rounded-2xl bg-card border border-white/10 hover:border-amber-400/50 hover:shadow-glow-amber overflow-hidden flex flex-col lg:col-span-2"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="relative h-64 md:h-full min-h-[260px] bg-[#241418] overflow-hidden">
+              <img
+                src="Assets/Unity Cinematic/surprising-new-friend-cover.jpg"
+                alt="Surprising New Friend Unity cinematic"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onerror="this.onerror=null; this.src='https://img.youtube.com/vi/iBNAPqIIVZE/hqdefault.jpg';"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-transparent via-transparent to-[#131824]/80"></div>
+              <span class="absolute top-4 left-4 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#090B10]/85 text-amber-300 border border-amber-400/30">
+                SOLO CINEMATIC
+              </span>
+            </div>
+
+            <div class="p-7 sm:p-8 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="font-mono text-xs sm:text-sm text-gray-400">Unity • Cinemachine • Storyboard</div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-2 group-hover:text-amber-300 transition-colors">Surprising New Friend</h3>
+                <p class="text-base sm:text-lg text-gray-300 mt-3 leading-relaxed">
+                  In engine sci fi cutscene using camera framing, rack focus, and audio cues to guide viewer attention across a 19 shot sequence.
+                </p>
+              </div>
+
+              <div class="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between text-sm font-mono text-amber-300">
+                <span>Watch Cutscene &amp; Shots</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 4. CORE DISCIPLINES SECTION                                           -->
+  <!-- ===================================================================== -->
+  <section id="disciplines" class="py-20 border-t border-white/[0.07] bg-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      <div class="rounded-2xl bg-card border border-white/10 p-7 sm:p-10 space-y-6">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Core Skills</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <p class="font-mono text-xs text-gray-400 mb-3">PRIMARY FOCUS</p>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3.5 py-2 rounded-lg text-sm font-medium bg-amber-500/15 text-amber-200 border border-amber-500/30">Level Design</span>
+              <span class="px-3.5 py-2 rounded-lg text-sm font-medium bg-amber-500/15 text-amber-200 border border-amber-500/30">Game Design</span>
+              <span class="px-3.5 py-2 rounded-lg text-sm font-medium bg-amber-500/15 text-amber-200 border border-amber-500/30">UX &amp; Readability</span>
+              <span class="px-3.5 py-2 rounded-lg text-sm font-medium bg-amber-500/15 text-amber-200 border border-amber-500/30">Player Flow &amp; Pacing</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-mono text-xs text-gray-400 mb-3">SYSTEMS &amp; ITERATION</p>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="px-3.5 py-2 rounded-lg text-sm font-medium bg-cyan-500/15 text-cyan-200 border border-cyan-500/30">Systems &amp; Economy Design</span>
+              <span class="px-3.5 py-2 rounded-lg text-sm font-medium bg-cyan-500/15 text-cyan-200 border border-cyan-500/30">Playtest Iteration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================================================================== -->
+  <!-- 5. GROUNDED CONTACT & FOOTER (EMAIL + LINKEDIN ONLY)                  -->
+  <!-- ===================================================================== -->
+  <footer id="contact" class="py-16 border-t border-white/[0.08] bg-[#07090D]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div>
+        <span class="font-mono text-xs uppercase tracking-widest text-amber-400">Contact</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1.5">Get in touch</h2>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <a
+          href="mailto:ignaciocajiao@gmail.com"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-amber-500 hover:bg-amber-400 text-gray-950 transition-all shadow-glow-amber"
+        >
+          ignaciocajiao@gmail.com
+        </a>
+
+        <button
+          onclick="copyEmailAddress()"
+          class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-mono font-medium bg-card hover:bg-white/10 text-gray-200 border border-white/15 transition-colors"
+        >
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          Copy Email
+        </button>
+
+        <a
+          href="https://www.linkedin.com/in/ignacio-cajiao-hernandez-32b4bb336/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-card hover:bg-white/10 text-cyan-300 border border-cyan-400/30 transition-colors"
+        >
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 mt-10 pt-6 border-t border-white/[0.06]">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-gray-500">
+        <span>© 2026 Ignacio Cajiao Hernandez • Level Design • Game Design • UX</span>
+        <button onclick="toggleAssetsDrawer()" id="assetsDrawerBtn" class="text-gray-400 hover:text-amber-300 underline underline-offset-4 transition-colors">
+          Local Assets Folder Guide ↓
+        </button>
+      </div>
+
+      <!-- Collapsible Local Assets Folder Guide -->
+      <div id="assetsDrawer" class="hidden mt-5 rounded-2xl bg-[#11151F] border border-white/10 p-5 font-mono text-xs text-gray-300 space-y-2.5">
+        <div class="text-amber-300 font-semibold uppercase tracking-wider text-[11px]">
+          GitHub Pages Folder Structure (Lightweight Images &amp; GIFs Only — Videos Stream via YouTube)
+        </div>
+        <div><span class="text-amber-300">assets/WaningLight/:</span> <code>Start screen.png</code>, <code>DayLivingroomV2.png</code>, <code>SchoolTaskImageText.png</code>, <code>Screen Recording 2026-04-01 022937.gif</code>, <code>Screen Recording 2026-04-01 022453.gif</code></div>
+        <div><span class="text-cyan-300">assets/Galactic Clean-Up/:</span> <code>20260416_003113.jpg</code>, <code>image000000(4).jpg</code>, <code>JoeTheTrashMan.png</code>, <code>GalacticCleanUpAngled.png</code></div>
+        <div><span class="text-amber-300">assets/Gravity Break/:</span> <code>Gravity Break FSM.png</code></div>
+        <div><span class="text-cyan-300">assets/FarCry level/:</span> Optional cover image <code>bounty-hunt-cover.jpg</code> (falls back automatically to YouTube thumbnail)</div>
+        <div><span class="text-amber-300">assets/Unity Cinematic/:</span> Optional cover image <code>surprising-new-friend-cover.jpg</code> (falls back automatically to YouTube thumbnail)</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- INTERACTIVE CASE STUDY MODAL                                          -->
+  <!-- ===================================================================== -->
+  <div id="caseStudyModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-8 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#11151F] border border-white/15 shadow-2xl p-6 sm:p-10">
+      <button
+        onclick="closeCaseStudy()"
+        aria-label="Close modal"
+        class="sticky top-0 float-right z-30 w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-gray-200 flex items-center justify-center transition-colors"
+      >
+        ✕
+      </button>
+      <div id="modalBody" class="space-y-8"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden items-center gap-2 px-4 py-3 rounded-xl bg-amber-500 text-gray-950 font-semibold text-xs sm:text-sm shadow-xl">
+    <span id="toastText">Copied to clipboard</span>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: HERO GALLERY, FILTERS & 5 RICH CASE STUDIES               -->
+  <!-- ===================================================================== -->
+  <script>
+    // -----------------------------------------------------------------------
+    // 1. HERO BACKGROUND GALLERY CONTROLS
+    // -----------------------------------------------------------------------
+    const HERO_CAPTIONS = [
+      '01 / Waning Light • Gameplay Loop',
+      '02 / Galactic Clean-Up • Wireless Gyro Controller Gameplay',
+      '03 / Bounty Hunt • Far Cry Arcade Bunker Level',
+      '04 / Surprising New Friend • Unity Cutscene'
+    ];
+    let currentHeroSlide = 0;
+    let heroAutoInterval = null;
+    let inspectBgActive = false;
+
+    function setHeroSlide(index) {
+      currentHeroSlide = index;
+      document.querySelectorAll('.hero-bg-slide').forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+        dot.className = i === index
+          ? 'hero-dot w-6 h-1.5 rounded-full bg-amber-400 transition-all'
+          : 'hero-dot w-2 h-1.5 rounded-full bg-white/25 hover:bg-white/50 transition-all';
+      });
+      document.getElementById('heroSlideCaption').textContent = HERO_CAPTIONS[index];
+    }
+
+    function startHeroAutoCycle() {
+      heroAutoInterval = setInterval(() => {
+        setHeroSlide((currentHeroSlide + 1) % HERO_CAPTIONS.length);
+      }, 6500);
+    }
+
+    function toggleInspectBg() {
+      inspectBgActive = !inspectBgActive;
+      document.getElementById('heroVeil').classList.toggle('inspect-bg', inspectBgActive);
+      document.getElementById('heroForeground').classList.toggle('inspect-bg', inspectBgActive);
+      document.getElementById('inspectBgToggle').textContent = inspectBgActive
+        ? 'Restore Intro Text'
+        : 'Inspect Background Art';
+    }
+
+    function toggleAssetsDrawer() {
+      const drawer = document.getElementById('assetsDrawer');
+      const btn = document.getElementById('assetsDrawerBtn');
+      const isHidden = drawer.classList.contains('hidden');
+      drawer.classList.toggle('hidden', !isHidden);
+      btn.textContent = isHidden ? 'Hide Local Assets Folder Guide ↑' : 'Local Assets Folder Guide ↓';
+    }
+
+    startHeroAutoCycle();
+
+    // -----------------------------------------------------------------------
+    // 2. INTERACTIVE CASE STUDY STATE & DATA
+    // -----------------------------------------------------------------------
+    let wlVideoMode = 'casestudy'; // 'casestudy' | 'extended'
+    let wlMood = 'balanced'; // 'balanced' | 'fulfilled' | 'stressed'
+    let gbEnemy = 'repair-bot'; // 'repair-bot' | 'electro-swarm' | 'space-leech'
+    let bhBeatIndex = 0;
+
+    const WL_CHAPTERS = [
+      {
+        sec: 0,
+        time: '0:00',
+        title: 'Intro & Core Loop',
+        note: 'Turn based card battler and life sim. Players spend 6 Willpower per turn drawing from their deck, ramping toward the 9 cost Ultimate Slash (20 DMG and Skip Turn). Role: Systems design, programming, and combat logic.'
+      },
+      {
+        sec: 33,
+        time: '0:33',
+        title: 'The Problem: Enemy RNG Lockout',
+        note: 'One of three enemy moves stole 1 Willpower. Pure 1/3 random rolls allowed consecutive steals 2 to 3 turns in a row, cancelling rare 3 card Ultimate setups without player counterplay.'
+      },
+      {
+        sec: 128,
+        time: '2:08',
+        title: 'The Solution: AI Rule & Deck Rebalance',
+        note: 'Added a non repeating AI constraint blocking consecutive Willpower steals, standardized Willpower ramp cards to trigger next turn, and expanded hand size (4 to 6) and deck size (10 to 20).'
+      },
+      {
+        sec: 183,
+        time: '3:03',
+        title: 'Result & Takeaway',
+        note: 'Seeing an enemy Willpower steal now signals a guaranteed safe window to set up combos next turn, preserving unpredictability while restoring player agency.'
+      }
+    ];
+
+    const WL_MOODS = {
+      balanced: {
+        label: 'Balanced (Default)',
+        badge: 'text-gray-200 bg-white/10 border-white/20',
+        input: 'Even mix of academic, social, and restorative daytime tasks.',
+        attack: '100% Baseline Attack Stats',
+        special: '100% Baseline Special & Defense Stats',
+        insight: 'Neutral baseline state that lets players scout unfamiliar boss patterns without committing to an offensive or defensive extreme.'
+      },
+      fulfilled: {
+        label: 'Fulfilled (Offense Buff / Special Debuff)',
+        badge: 'text-amber-200 bg-amber-500/20 border-amber-400/40',
+        input: 'Prioritizing high fulfillment daytime tasks with high opportunity cost.',
+        attack: '+BUFFED Attack Cards & Combo Scaling',
+        special: '-DEBUFFED Special & Utility Output',
+        insight: 'Favored by players due to positive framing, though high damage bosses can punish neglecting defensive special cards.'
+      },
+      stressed: {
+        label: 'Stressed (Special & Defense Buff / Attack Debuff)',
+        badge: 'text-cyan-200 bg-cyan-500/20 border-cyan-400/40',
+        input: 'High pressure daytime routines or neglected restorative tasks.',
+        attack: '-DEBUFFED Direct Attack Damage',
+        special: '+BUFFED Shields, Negation & Special Cards',
+        insight: 'Mathematically optimal against burst damage bosses, yet players instinctively avoid it due to Loss Aversion.'
+      }
+    };
+
+    const GB_ENEMIES = {
+      'repair-bot': {
+        name: 'Repair Bot',
+        states: ['Searching', 'Repairing', 'Defense'],
+        behavior: 'Small spider like drones roam walls and ceilings to mend damaged spaceship hull sections. When the player enters detection range, they shift into Defense mode. Once the player exits range, they resume Searching.',
+        counterplay: 'Players must time their gravity flips to vault over structural walls while the Repair Bot is locked into its Repairing animation.'
+      },
+      'electro-swarm': {
+        name: 'Electro Swarm',
+        states: ['Floating', 'Attacking', 'Scattered', 'Reforming'],
+        behavior: 'Living electrical anomalies that drift across corridors and pursue the player when within proximity.',
+        counterplay: 'Flipping gravity disrupts the swarm cohesion, forcing it into a Scattered, powerless state and giving the player a safe traversal window before it reforms.'
+      },
+      'space-leech': {
+        name: 'Space Leech',
+        states: ['Patrolling', 'Attached', 'Dead'],
+        behavior: 'Parasitic creatures patrolling platforms that latch onto the player on contact and continuously drain oxygen levels.',
+        counterplay: 'Creates a deliberate risk and reward dilemma where the only way to detach a Space Leech is to intentionally take spike damage before oxygen runs out.'
+      }
+    };
+
+    const BH_BEATS = [
+      { step: '01', title: 'Helicopter Landing', intensity: 'Low Intensity', color: 'text-cyan-300 border-cyan-400/40 bg-cyan-500/10', desc: 'Player lands on the forest helipad at night, selects loadout weapons from supply crates, and descends the red flare lit bunker hatch.' },
+      { step: '02', title: 'Bunker Exploration', intensity: 'Moderate Intensity', color: 'text-amber-300 border-amber-400/40 bg-amber-500/10', desc: 'Quiet descent through blood stained stairwells, a ransacked office hub, and an experimentation bay, building narrative dread through environmental storytelling.' },
+      { step: '03', title: 'Intel & Survivor Target', intensity: 'Moderate Intensity', color: 'text-amber-300 border-amber-400/40 bg-amber-500/10', desc: 'In the lowest chamber, the player neutralizes the lone survivor and destroys the spotlight highlighted classified document.' },
+      { step: '04', title: 'Extraction Triggered', intensity: 'High Intensity', color: 'text-orange-300 border-orange-400/40 bg-orange-500/10', desc: 'Destroying the intel shifts the music tempo and flips the objective to GET TO THE EXIT, turning the infiltration route into an ambush.' },
+      { step: '05', title: 'Central Hub Arena Boss Fight', intensity: 'Very High Intensity', color: 'text-red-300 border-red-400/40 bg-red-500/15', desc: 'The multi desk office room converts into a full 3D combat arena against waves of infected and a heavy boss using pillars and desks as tactical cover.' },
+      { step: '06', title: 'Stairwell Sprint', intensity: 'High Intensity', color: 'text-orange-300 border-orange-400/40 bg-orange-500/10', desc: 'Close quarters skirmishes up the narrow red lit stairwell landings while managing ammo and medkits.' },
+      { step: '07', title: 'Rooftop Exfil', intensity: 'High Intensity', color: 'text-orange-300 border-orange-400/40 bg-orange-500/10', desc: 'Player climbs back out the hatch to the helipad and boards the helicopter to complete the mission.' }
+    ];
+
+    const SNF_SHOTS = [
+      {
+        sec: 9,
+        time: '0:09',
+        title: 'Pan Shot',
+        note: 'Sweeps across the alien canyon at the start of the scene to establish spatial landmarks, scale, and the path ahead before introducing the character.'
+      },
+      {
+        sec: 15,
+        time: '0:15',
+        title: 'Rack Focus',
+        note: 'Shifts depth of field past Ellen onto a camouflaged creature in the background, naturally pulling the viewer’s eye to the hidden threat and motivating her next move.'
+      },
+      {
+        sec: 46,
+        time: '0:46',
+        title: 'Tracking Shot',
+        note: 'Follows Ellen’s movement through the rocky corridor, maintaining spatial orientation and building momentum as tension rises.'
+      }
+    ];
+
+    function openCaseStudy(id) {
+      const modal = document.getElementById('caseStudyModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+
+      if (id === 'waning-light') renderWaningLight();
+      if (id === 'galactic-cleanup') renderGalacticCleanup();
+      if (id === 'gravity-break') renderGravityBreak();
+      if (id === 'bounty-hunt') renderBountyHunt();
+      if (id === 'surprising-new-friend') renderSurprisingNewFriend();
+    }
+
+    function closeCaseStudy() {
+      const modal = document.getElementById('caseStudyModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      document.getElementById('modalBody').innerHTML = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCaseStudy();
+    });
+
+    document.getElementById('caseStudyModal').addEventListener('click', (e) => {
+      if (e.target.id === 'caseStudyModal') closeCaseStudy();
+    });
+
+    // -----------------------------------------------------------------------
+    // MODAL 1: WANING LIGHT
+    // -----------------------------------------------------------------------
+    function setWlVideoMode(mode) {
+      wlVideoMode = mode;
+      renderWaningLight();
+    }
+
+    function seekWlVideo(seconds) {
+      if (wlVideoMode !== 'casestudy') {
+        wlVideoMode = 'casestudy';
+        renderWaningLight();
+      }
+      const frame = document.getElementById('wlVideoPlayer');
+      if (frame) {
+        frame.src = `https://www.youtube.com/embed/-GwucSMqH-0?start=${seconds}&autoplay=1&rel=0`;
+      }
+    }
+
+    function updateWlMood(mood) {
+      wlMood = mood;
+      const panel = document.getElementById('wlMoodPanel');
+      if (!panel) return;
+      const m = WL_MOODS[wlMood];
+
+      document.querySelectorAll('.wl-mood-btn').forEach(btn => {
+        const isActive = btn.dataset.mood === wlMood;
+        btn.className = isActive
+          ? 'wl-mood-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold bg-amber-500 text-gray-950 transition-colors'
+          : 'wl-mood-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono bg-white/5 text-gray-300 hover:bg-white/10 transition-colors';
+      });
+
+      panel.innerHTML = `
+        <div class="inline-block px-3 py-1.5 rounded-lg text-xs sm:text-sm font-mono border ${m.badge}">${m.label}</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+            <div class="font-mono text-xs text-gray-400">DAYTIME ROUTINE</div>
+            <div class="text-sm sm:text-base text-gray-200 mt-1.5 leading-relaxed">${m.input}</div>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+            <div class="font-mono text-xs text-gray-400">NIGHTTIME ATTACK CARDS</div>
+            <div class="text-sm sm:text-base text-amber-300 font-semibold mt-1.5 leading-relaxed">${m.attack}</div>
+          </div>
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+            <div class="font-mono text-xs text-gray-400">SPECIAL &amp; DEFENSE CARDS</div>
+            <div class="text-sm sm:text-base text-cyan-300 font-semibold mt-1.5 leading-relaxed">${m.special}</div>
+          </div>
+        </div>
+        <p class="text-sm sm:text-base text-gray-300 pt-1 leading-relaxed"><span class="font-mono text-amber-400">Player Psychology Finding:</span> ${m.insight}</p>
+      `;
+    }
+
+    function renderWaningLight() {
+      const body = document.getElementById('modalBody');
+      const m = WL_MOODS[wlMood];
+      const videoId = wlVideoMode === 'casestudy' ? '-GwucSMqH-0' : 'KPvr7AhB2kk';
+      const videoUrl = `https://youtu.be/${videoId}`;
+
+      body.innerHTML = `
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono text-amber-400">
+            <span>CAPSTONE TEAM PROJECT</span>
+            <span>•</span>
+            <span>TREEBEAR INTERACTIVE</span>
+            <span>•</span>
+            <span>UNITY</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mt-2">Waning Light: Combat AI &amp; Mood Based Economy</h2>
+          <p class="text-base sm:text-lg text-gray-300 mt-3 max-w-4xl leading-relaxed">
+            Developed with a capstone team under <strong class="text-white">Treebear Interactive</strong>. I worked on systems design, programming, and combat logic, focusing on fixing turn based RNG lockouts and linking daytime student routines to nighttime card combat stats.
+          </p>
+        </div>
+
+        <!-- Video Player & Mode Switcher -->
+        <div class="rounded-2xl bg-[#090B10] border border-white/10 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div class="flex flex-wrap gap-2.5">
+              <button
+                onclick="setWlVideoMode('casestudy')"
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-semibold transition-colors ${wlVideoMode === 'casestudy' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}"
+              >
+                Designer Case Study (3:22)
+              </button>
+              <button
+                onclick="setWlVideoMode('extended')"
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-semibold transition-colors ${wlVideoMode === 'extended' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}"
+              >
+                Extended Gameplay
+              </button>
+            </div>
+            <a href="${videoUrl}" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-amber-300 hover:underline">
+              Watch on YouTube ↗
+            </a>
+          </div>
+
+          <div class="aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/10">
+            <iframe
+              id="wlVideoPlayer"
+              src="https://www.youtube.com/embed/${videoId}?rel=0"
+              title="Waning Light Video"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full border-0"
+            ></iframe>
+          </div>
+
+          <!-- Timestamp Chapter Jump Buttons -->
+          <div class="mt-6">
+            <div class="font-mono text-xs uppercase tracking-wider text-gray-400 mb-3">Case Study Video Chapters (Click to Jump)</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${WL_CHAPTERS.map(ch => `
+                <button
+                  onclick="seekWlVideo(${ch.sec})"
+                  class="text-left p-4 rounded-xl bg-white/[0.03] hover:bg-amber-500/10 border border-white/10 hover:border-amber-400/40 transition-all"
+                >
+                  <div class="flex items-center gap-2 font-mono text-sm text-amber-300 font-semibold">
+                    <span>▶ ${ch.time}</span>
+                    <span>${ch.title}</span>
+                  </div>
+                  <p class="text-sm sm:text-base text-gray-300 mt-2 leading-relaxed">${ch.note}</p>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Gameplay GIFs & UI Screenshots Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden" onerror="this.style.display='none'">
+            <img src="Assets/WaningLight/Screen Recording 2026-04-01 022937.gif" alt="Nighttime card combat loop" class="w-full h-44 object-cover" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3 font-mono text-xs text-gray-400">Nighttime Combat &amp; Card Synergy</div>
+          </div>
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden">
+            <img src="Assets/WaningLight/Screen Recording 2026-04-01 022453.gif" alt="Daytime bedroom & journal loop" class="w-full h-44 object-cover" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3 font-mono text-xs text-gray-400">Daytime Routine &amp; Journal UI</div>
+          </div>
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden">
+            <img src="Assets/WaningLight/DayLivingroomV2.png" alt="Top-down apartment layout" class="w-full h-44 object-cover" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3 font-mono text-xs text-gray-400">Top Down Apartment Layout</div>
+          </div>
+        </div>
+
+        <!-- Interactive Mood-Based Economy Simulator -->
+        <div class="rounded-2xl bg-[#090B10] border border-amber-500/30 p-6 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <span class="font-mono text-xs uppercase tracking-wider text-amber-400">Systems &amp; Economy Design</span>
+              <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Interactive Mood Economy Simulator</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button data-mood="balanced" onclick="updateWlMood('balanced')" class="wl-mood-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold ${wlMood === 'balanced' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}">Balanced</button>
+              <button data-mood="fulfilled" onclick="updateWlMood('fulfilled')" class="wl-mood-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold ${wlMood === 'fulfilled' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}">Fulfilled</button>
+              <button data-mood="stressed" onclick="updateWlMood('stressed')" class="wl-mood-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold ${wlMood === 'stressed' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}">Stressed</button>
+            </div>
+          </div>
+
+          <div id="wlMoodPanel" class="space-y-4">
+            <div class="inline-block px-3 py-1.5 rounded-lg text-xs sm:text-sm font-mono border ${m.badge}">${m.label}</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+              <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+                <div class="font-mono text-xs text-gray-400">DAYTIME ROUTINE</div>
+                <div class="text-sm sm:text-base text-gray-200 mt-1.5 leading-relaxed">${m.input}</div>
+              </div>
+              <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+                <div class="font-mono text-xs text-gray-400">NIGHTTIME ATTACK CARDS</div>
+                <div class="text-sm sm:text-base text-amber-300 font-semibold mt-1.5 leading-relaxed">${m.attack}</div>
+              </div>
+              <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+                <div class="font-mono text-xs text-gray-400">SPECIAL &amp; DEFENSE CARDS</div>
+                <div class="text-sm sm:text-base text-cyan-300 font-semibold mt-1.5 leading-relaxed">${m.special}</div>
+              </div>
+            </div>
+            <p class="text-sm sm:text-base text-gray-300 pt-1 leading-relaxed"><span class="font-mono text-amber-400">Player Psychology Finding:</span> ${m.insight}</p>
+          </div>
+        </div>
+
+        <!-- Macroeconomic Loop & Behavioral Biases -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10 space-y-3">
+            <div class="font-mono text-sm text-amber-400 font-bold">MACROECONOMIC RESOURCE LOOP</div>
+            <div class="font-mono text-xs sm:text-sm text-gray-300 bg-white/[0.03] p-4 rounded-xl border border-white/5 leading-relaxed">
+              Regulator → Daily Willpower Faucet → Daytime Tasks → Mood Status → Nighttime Card Buffs and Debuffs
+            </div>
+            <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+              Every daytime action spends limited Willpower and shifts the player's emotional state, turning time management into an indirect deck tuning system before each nighttime encounter.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10 space-y-3">
+            <div class="font-mono text-sm text-cyan-400 font-bold">BEHAVIORAL BIASES OBSERVED IN PLAYTESTS</div>
+            <ul class="text-sm sm:text-base text-gray-300 space-y-2 leading-relaxed">
+              <li><strong class="text-white">Loss Aversion:</strong> Players avoided Stressed builds because Attack penalties felt worse than equivalent Defense gains.</li>
+              <li><strong class="text-white">Present Bias:</strong> Players spent Willpower on immediate social perks over long term recovery.</li>
+              <li><strong class="text-white">Sunk Cost Fallacy:</strong> Players forced deep investment into a single mood track even when boss mechanics favored pivoting.</li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // MODAL 2: GALACTIC CLEAN-UP
+    // -----------------------------------------------------------------------
+    function renderGalacticCleanup() {
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono text-cyan-400">
+            <span>GAME JAM TEAM + SOLO HARDWARE SPRINT</span>
+            <span>•</span>
+            <span>UNITY • BLENDER • ESP32 GYRO</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mt-2">Galactic Clean Up: In Game UX &amp; Wireless Gyro Controller</h2>
+          <p class="text-base sm:text-lg text-gray-300 mt-3 max-w-4xl leading-relaxed">
+            Started as a 48 hour game jam build where I integrated UI, audio, and 3D assets in Unity, then expanded solo into an Experience Design project featuring a custom 3D printed wireless garbage truck controller.
+          </p>
+        </div>
+
+        <!-- Designer Commentary Video -->
+        <div class="rounded-2xl bg-[#090B10] border border-white/10 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-mono text-gray-400 mb-4">
+            <span class="text-cyan-300 font-semibold">Designer Commentary &amp; Hardware Playtest (3:12)</span>
+            <a href="https://youtu.be/O9p9akqp9SU" target="_blank" rel="noopener noreferrer" class="text-cyan-300 hover:underline">
+              Watch on YouTube ↗
+            </a>
+          </div>
+          <div class="aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/10">
+            <iframe
+              src="https://www.youtube.com/embed/O9p9akqp9SU?rel=0"
+              title="Galactic Clean-Up Designer Commentary"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full border-0"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Hardware & Concept Gallery -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden">
+            <img src="Assets/Galactic Clean-Up/20260416_003113.jpg" alt="Finished 3D-printed gyro controller" class="w-full h-48 object-cover" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3.5 font-mono text-xs text-gray-300">Finished Hand Painted 3D Printed Controller</div>
+          </div>
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden">
+            <img src="Assets/Galactic Clean-Up/image000000(4).jpg" alt="Exploded CAD assembly" class="w-full h-48 object-cover" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3.5 font-mono text-xs text-gray-300">Exploded CAD View (Battery, ESP32, Gyro)</div>
+          </div>
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden">
+            <img src="Assets/Galactic Clean-Up/JoeTheTrashMan.png" alt="Space garbage truck concept art" class="w-full h-48 object-contain bg-[#11151F] p-2" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3.5 font-mono text-xs text-gray-300">Initial 2D Concept Illustration</div>
+          </div>
+          <div class="rounded-xl bg-[#090B10] border border-white/10 overflow-hidden">
+            <img src="Assets/Galactic Clean-Up/GalacticCleanUpAngled.png" alt="Galactic Clean-Up title logo" class="w-full h-48 object-contain bg-[#11151F] p-3" onerror="this.parentElement.style.display='none'" />
+            <div class="p-3.5 font-mono text-xs text-gray-300">Game Title Emblem</div>
+          </div>
+        </div>
+
+        <!-- Two-Phase Engineering & UX Breakdown -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10 space-y-2.5">
+            <div class="font-mono text-sm text-cyan-400 font-bold">PHASE 1: UNITY UX &amp; INTEGRATION</div>
+            <p class="text-gray-300 leading-relaxed">
+              Assembled the playable Unity scene by wiring together 3D models, UI prompts, and responsive sound cues so orbital trash collection felt readable under time pressure.
+            </p>
+          </div>
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10 space-y-2.5">
+            <div class="font-mono text-sm text-amber-400 font-bold">PHASE 2: DIEGETIC HARDWARE ERGONOMICS</div>
+            <p class="text-gray-300 leading-relaxed">
+              Modeled a custom multi part housing in Blender around an ESP32 and 6 axis accelerometer, adding tilt deadzones, a thumb boost trigger, and a USB C charging port after playtest feedback.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // MODAL 3: GRAVITY BREAK
+    // -----------------------------------------------------------------------
+    function updateGbEnemy(enemy) {
+      gbEnemy = enemy;
+      const panel = document.getElementById('gbEnemyPanel');
+      if (!panel) return;
+      const e = GB_ENEMIES[gbEnemy];
+
+      document.querySelectorAll('.gb-enemy-btn').forEach(btn => {
+        const isActive = btn.dataset.enemy === gbEnemy;
+        btn.className = isActive
+          ? 'gb-enemy-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold bg-amber-500 text-gray-950 transition-colors'
+          : 'gb-enemy-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono bg-white/5 text-gray-300 hover:bg-white/10 transition-colors';
+      });
+
+      panel.innerHTML = `
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="font-mono text-xs text-gray-400">FSM STATES:</span>
+          ${e.states.map((st, idx) => `
+            <span class="px-2.5 py-1 rounded-md text-xs sm:text-sm font-mono bg-amber-500/15 text-amber-200 border border-amber-400/30">${st}</span>
+            ${idx < e.states.length - 1 ? '<span class="text-gray-500 font-mono text-xs">→</span>' : ''}
+          `).join('')}
+        </div>
+        <p class="text-sm sm:text-base text-gray-300 leading-relaxed"><strong class="text-white">Behavior:</strong> ${e.behavior}</p>
+        <p class="text-sm sm:text-base text-cyan-300 leading-relaxed"><strong class="text-cyan-200">Player Counterplay:</strong> ${e.counterplay}</p>
+      `;
+    }
+
+    function renderGravityBreak() {
+      const body = document.getElementById('modalBody');
+      const e = GB_ENEMIES[gbEnemy];
+      body.innerHTML = `
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono text-amber-400">
+            <span>GAME DESIGN CONCEPT</span>
+            <span>•</span>
+            <span>2D SCI FI PLATFORMER</span>
+            <span>•</span>
+            <span>SYSTEMS &amp; FLOW</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mt-2">Gravity Break: Systems, UX &amp; Enemy Counterplay</h2>
+          <p class="text-base sm:text-lg text-gray-300 mt-3 max-w-4xl leading-relaxed">
+            A 2D action platformer concept set aboard a failing space station where the player flips gravity to traverse hazards, conserve depleting oxygen, and outmaneuver distinct enemy behaviors.
+          </p>
+        </div>
+
+        <!-- Full-Width Readable FSM & Mechanics Visual -->
+        <div class="rounded-2xl bg-[#090B10] border border-white/10 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-mono text-gray-400 mb-4">
+            <span class="text-amber-300 font-semibold">Enemy State Machines &amp; Gravity Inversion Sheet</span>
+            <a
+              href="Assets/Gravity Break/Gravity Break FSM.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-cyan-300 hover:text-cyan-200 underline underline-offset-4"
+            >
+              Open Full Resolution Image ↗
+            </a>
+          </div>
+          <img
+            src="Assets/Gravity Break/Gravity Break FSM.png"
+            alt="Gravity Break FSM and gameplay sheet"
+            class="w-full h-auto rounded-xl border border-white/10 bg-black"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          />
+          <div style="display:none;" class="p-8 text-center font-mono text-sm text-gray-400">
+            Place <code>Assets/Gravity Break/Gravity Break FSM.png</code> in your local folder to view the sheet here.
+          </div>
+        </div>
+
+        <!-- Interactive Enemy FSM & Counterplay Inspector -->
+        <div class="rounded-2xl bg-[#090B10] border border-amber-500/30 p-6 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <span class="font-mono text-xs uppercase tracking-wider text-amber-400">Enemy Design &amp; Readability</span>
+              <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Inspect Enemy State Machines</h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button data-enemy="repair-bot" onclick="updateGbEnemy('repair-bot')" class="gb-enemy-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold ${gbEnemy === 'repair-bot' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}">Repair Bot</button>
+              <button data-enemy="electro-swarm" onclick="updateGbEnemy('electro-swarm')" class="gb-enemy-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold ${gbEnemy === 'electro-swarm' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}">Electro Swarm</button>
+              <button data-enemy="space-leech" onclick="updateGbEnemy('space-leech')" class="gb-enemy-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold ${gbEnemy === 'space-leech' ? 'bg-amber-500 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}">Space Leech</button>
+            </div>
+          </div>
+
+          <div id="gbEnemyPanel" class="p-5 rounded-xl bg-white/[0.03] border border-white/10 space-y-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-xs text-gray-400">FSM STATES:</span>
+              ${e.states.map((st, idx) => `
+                <span class="px-2.5 py-1 rounded-md text-xs sm:text-sm font-mono bg-amber-500/15 text-amber-200 border border-amber-400/30">${st}</span>
+                ${idx < e.states.length - 1 ? '<span class="text-gray-500 font-mono text-xs">→</span>' : ''}
+              `).join('')}
+            </div>
+            <p class="text-sm sm:text-base text-gray-300 leading-relaxed"><strong class="text-white">Behavior:</strong> ${e.behavior}</p>
+            <p class="text-sm sm:text-base text-cyan-300 leading-relaxed"><strong class="text-cyan-200">Player Counterplay:</strong> ${e.counterplay}</p>
+          </div>
+        </div>
+
+        <!-- Diegetic UX & Level Pacing -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10">
+            <div class="font-mono text-sm text-cyan-400 font-bold">UX &amp; READABILITY SIGNALS</div>
+            <p class="text-gray-300 mt-3 leading-relaxed">
+              Designed clear visual state cues across every mechanic: a glowing suit chest strip displays remaining gravity charge, blue oxygen pods contrast against dark hull walls, and ceiling cracks telegraph falling debris before impact.
+            </p>
+          </div>
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10">
+            <div class="font-mono text-sm text-amber-400 font-bold">9 STEP ESCALATING LEVEL FLOW</div>
+            <p class="text-gray-300 mt-3 leading-relaxed">
+              Structured a complete level sequence from low risk jump tutorials into dual hazard corridors, combining timed gravity flips with oxygen pickups and risk reward enemy encounters.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // MODAL 4: BOUNTY HUNT (FAR CRY ARCADE)
+    // -----------------------------------------------------------------------
+    function updateBhBeat(index) {
+      bhBeatIndex = index;
+      const panel = document.getElementById('bhBeatPanel');
+      if (!panel) return;
+      const b = BH_BEATS[bhBeatIndex];
+
+      document.querySelectorAll('.bh-beat-btn').forEach((btn, i) => {
+        const isActive = i === bhBeatIndex;
+        btn.className = isActive
+          ? 'bh-beat-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold bg-cyan-400 text-gray-950 transition-colors'
+          : 'bh-beat-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono bg-white/5 text-gray-300 hover:bg-white/10 transition-colors';
+      });
+
+      panel.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="font-mono text-base sm:text-lg font-bold text-white">Beat ${b.step}: ${b.title}</span>
+          <span class="px-3 py-1 rounded-md text-xs sm:text-sm font-mono border ${b.color}">${b.intensity}</span>
+        </div>
+        <p class="text-sm sm:text-base text-gray-300 mt-3 leading-relaxed">${b.desc}</p>
+      `;
+    }
+
+    function renderBountyHunt() {
+      const body = document.getElementById('modalBody');
+      const b = BH_BEATS[bhBeatIndex];
+      body.innerHTML = `
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono text-cyan-400">
+            <span>SOLO LEVEL DESIGN</span>
+            <span>•</span>
+            <span>FAR CRY ARCADE EDITOR</span>
+            <span>•</span>
+            <span>3D FPS</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mt-2">Bounty Hunt: Underground Bunker Extraction</h2>
+          <p class="text-base sm:text-lg text-gray-300 mt-3 max-w-4xl leading-relaxed">
+            A multi floor nocturnal bunker infiltration and extraction level designed around non verbal lighting wayfinding, claustrophobic tension, and a reverse route combat climax.
+          </p>
+        </div>
+
+        <!-- Level Prototype Playthrough Video -->
+        <div class="rounded-2xl bg-[#090B10] border border-white/10 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-mono text-gray-400 mb-4">
+            <span class="text-cyan-300 font-semibold">Full Level Playthrough &amp; Editor Walkthrough (8:47)</span>
+            <a href="https://youtu.be/vbFNlQmJRS0" target="_blank" rel="noopener noreferrer" class="text-cyan-300 hover:underline">
+              Watch on YouTube ↗
+            </a>
+          </div>
+          <div class="aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/10">
+            <iframe
+              src="https://www.youtube.com/embed/vbFNlQmJRS0?rel=0"
+              title="Bounty Hunt Far Cry Arcade Level Playthrough"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full border-0"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Interactive 7-Beat Pacing Chart -->
+        <div class="rounded-2xl bg-[#090B10] border border-cyan-500/30 p-6 space-y-5">
+          <div>
+            <span class="font-mono text-xs uppercase tracking-wider text-cyan-400">Level Pacing &amp; Flow</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Interactive 7 Beat Intensity Timeline</h3>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            ${BH_BEATS.map((beat, i) => `
+              <button
+                onclick="updateBhBeat(${i})"
+                class="bh-beat-btn px-3.5 py-2 rounded-lg text-xs sm:text-sm font-mono font-semibold transition-colors ${i === bhBeatIndex ? 'bg-cyan-400 text-gray-950' : 'bg-white/5 text-gray-300 hover:bg-white/10'}"
+              >
+                ${beat.step}. ${beat.title}
+              </button>
+            `).join('')}
+          </div>
+
+          <div id="bhBeatPanel" class="p-5 rounded-xl bg-white/[0.03] border border-white/10">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-mono text-base sm:text-lg font-bold text-white">Beat ${b.step}: ${b.title}</span>
+              <span class="px-3 py-1 rounded-md text-xs sm:text-sm font-mono border ${b.color}">${b.intensity}</span>
+            </div>
+            <p class="text-sm sm:text-base text-gray-300 mt-3 leading-relaxed">${b.desc}</p>
+          </div>
+        </div>
+
+        <!-- Wayfinding & Postmortem -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10">
+            <div class="font-mono text-sm text-amber-400 font-bold">COLOR CODED LIGHTING WAYFINDING</div>
+            <p class="text-gray-300 mt-3 leading-relaxed">
+              Without floating HUD waypoints, red emergency flares guide the player down the main stairwell path, warm yellow lamps mark ammo and medkit caches, and a harsh white spotlight isolates the final target room.
+            </p>
+          </div>
+          <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10">
+            <div class="font-mono text-sm text-cyan-400 font-bold">SCOPE PIVOT &amp; POSTMORTEM</div>
+            <p class="text-gray-300 mt-3 leading-relaxed">
+              Early editor tests showed that multi story forest exterior geometry caused NPC pathfinding bottlenecks. Pivoting to a self contained underground bunker allowed tighter combat sightlines, cleaner AI navigation, and stronger environmental storytelling.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // MODAL 5: SURPRISING NEW FRIEND (UNITY CINEMATIC)
+    // -----------------------------------------------------------------------
+    function seekSnfVideo(seconds) {
+      const frame = document.getElementById('snfVideoPlayer');
+      if (frame) {
+        frame.src = `https://www.youtube.com/embed/iBNAPqIIVZE?start=${seconds}&autoplay=1&rel=0`;
+      }
+    }
+
+    function renderSurprisingNewFriend() {
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-mono text-amber-400">
+            <span>SOLO CINEMATIC</span>
+            <span>•</span>
+            <span>UNITY • CINEMACHINE • 19 SHOT STORYBOARD</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mt-2">Surprising New Friend: Cinematography &amp; Visual Staging</h2>
+        </div>
+
+        <!-- Cinematic Video Player + Interactive Shot Jumps -->
+        <div class="rounded-2xl bg-[#090B10] border border-amber-500/30 p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm font-mono text-gray-400 mb-4">
+            <span class="text-amber-300 font-semibold">Final Rendered Cutscene (1:18)</span>
+            <a href="https://youtu.be/iBNAPqIIVZE" target="_blank" rel="noopener noreferrer" class="text-amber-300 hover:underline">
+              Watch on YouTube ↗
+            </a>
+          </div>
+          <div class="aspect-video w-full rounded-xl overflow-hidden bg-black border border-white/10">
+            <iframe
+              id="snfVideoPlayer"
+              src="https://www.youtube.com/embed/iBNAPqIIVZE?rel=0"
+              title="Surprising New Friend Unity Cinematic"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full border-0"
+            ></iframe>
+          </div>
+
+          <div class="mt-6">
+            <div class="font-mono text-xs uppercase tracking-wider text-gray-400 mb-3">Jump to Camera Technique</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              ${SNF_SHOTS.map(shot => `
+                <button
+                  onclick="seekSnfVideo(${shot.sec})"
+                  class="text-left p-4 rounded-xl bg-white/[0.03] hover:bg-amber-500/10 border border-white/10 hover:border-amber-400/40 transition-all"
+                >
+                  <div class="flex items-center gap-2 font-mono text-sm text-amber-300 font-semibold">
+                    <span>▶ ${shot.time}</span>
+                    <span>${shot.title}</span>
+                  </div>
+                  <p class="text-sm sm:text-base text-gray-300 mt-2 leading-relaxed">${shot.note}</p>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Cinematography & Player Guidance Breakdown -->
+        <div class="space-y-6">
+          <p class="text-base sm:text-lg text-gray-300 leading-relaxed max-w-4xl">
+            In games, camera framing, lighting, and sound are some of the clearest tools for guiding player attention without relying on UI markers. I created this 19 shot Unity cutscene to practice directing a viewer's eye through an unfamiliar space and shifting the emotional tone from curiosity to tension and comedic relief.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-base">
+            <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10">
+              <div class="font-mono text-sm text-amber-400 font-bold">VISUAL HIERARCHY &amp; FOCUS</div>
+              <p class="text-gray-300 mt-3 leading-relaxed">
+                Starts with a wide pan to establish landmarks in the alien canyon, then uses a shallow rack focus past Ellen to pull attention onto a camouflaged creature in the background and motivate her next movement.
+              </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-[#090B10] border border-white/10">
+              <div class="font-mono text-sm text-cyan-400 font-bold">PERSPECTIVE &amp; EMOTIONAL PACING</div>
+              <p class="text-gray-300 mt-3 leading-relaxed">
+                Uses over the shoulder perspective cuts and snarling audio cues to make a pack ambush feel threatening before cutting to black, then pulls upward from a tight close up to reveal the creatures are actually friendly.
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. CLIPBOARD HELPER & TOAST
+    // -----------------------------------------------------------------------
+    function copyEmailAddress() {
+      const email = 'ignaciocajiao@gmail.com';
+      const el = document.createElement('textarea');
+      el.value = email;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast('Copied ignaciocajiao@gmail.com');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastText').textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 2800);
+    }
+  </script>
+</body>
+</html>
